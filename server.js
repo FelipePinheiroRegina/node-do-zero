@@ -26,7 +26,7 @@ const database = new DatabaseMemory();
 server.post('/videos', (request, reply) => {
     const { title, description, duration } = request.body;
 
-    database.create({  
+    const video = database.create({  
         // short sintaxe, em JS quando o titulo e a variavel tem o mesmo nome da pra simplificar, para somente um parametro.
         //title: title,
         title,
@@ -36,19 +36,28 @@ server.post('/videos', (request, reply) => {
         duration,
     });  // Todos post e put precisarei mandar um request body
 
-    console.log(database.list()); // Com esse  comando eu devo conseguir ver os videos no meu server
+    //console.log(database.list()); // Com esse  comando eu devo conseguir ver os videos no meu server
 
     return reply.status(201).send();
 });
 
 server.get('/videos', () => {
     const videos = database.list();
-    console.log(videos)
+    
     return videos;
 });
 
-server.put('/videos/:id', () => {  // o :id, serve para identificar o video a ser atualizado.
-    return 'Essa é minha rota Pinheiro';
+server.put('/videos/:id', (request, reply) => {  // o :id, serve para identificar o video a ser atualizado.
+    const videoId = request.params.id;
+    const {title, description, duration} = request.body;
+
+    database.update(videoId, {
+        title,
+        description,
+        duration,
+    }); 
+
+    return reply.status(204).send();
 });
 
 server.delete('/videos/:id', () => {  // o :id, serve para identificar o video a ser deletado.
@@ -60,5 +69,5 @@ server.delete('/videos/:id', () => {  // o :id, serve para identificar o video a
 
 // server.listen(3333) // Em vez de passar a porta direto, o fastify pede para passarmos um objeto json com a porta
 server.listen({
-    port: 3333,
+    port: 3000,
 });

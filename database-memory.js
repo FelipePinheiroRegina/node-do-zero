@@ -9,7 +9,7 @@ export class DatabaseMemory {
     
     // MÉTODOS DE MANIPULAÇÃO DE VIDEOS
     list() {
-        return Array.from(this.#videos.values())  // array.from converte uma estrutura de dados que não é um array, para um array
+        return Array.from(this.#videos.entries())  // array.from converte uma estrutura de dados que não é um array, para um array 
     }
 
     create(video) {
