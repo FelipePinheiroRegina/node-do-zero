@@ -1,0 +1,20 @@
+{
+  "name": "do-zero",
+  "version": "1.0.0",
+  "description": "Descomplicando node, desde o começo até uma api em produção.",
+  "main": "server.js",
+  "_Comentario": "_Com o type module abaixo o meu server.js identifica que eu quero usar a sintaxe mais recente de importação",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "_Comentario": "_Eu crio o comando abaixo para não ter que ficar digitando toda vez no terminal. Resumindo o comando em | npm run dev",
+    "dev": "node --watch --no-warnings server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fastify": "^4.25.1"
+  }
+}

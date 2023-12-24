@@ -1,0 +1,15 @@
+POST http://localhost:3333/videos
+// Com esse comando eu estou avisando pro meu backend que é um arquivo Json
+Content-Type: application/json 
+// OBS: quando não estou mandando nada no body, não preciso desse meta dado
+
+
+ {
+	"title": "Descomplicando NodeJS",
+	"description": "NodeJS do zero a api, em apenas um video!",
+	"duration": 180
+}
+
+###
+
+GET http://localhost:3333/videos
