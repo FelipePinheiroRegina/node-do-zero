@@ -78,5 +78,6 @@ server.delete('/videos/:id', async (request, reply) => {
 
 // server.listen(3333) // Em vez de passar a porta direto, o fastify pede para passarmos um objeto json com a porta
 server.listen({
+    host: '0.0.0.0',
     port: process.env.PORT ?? 3000,
 });
