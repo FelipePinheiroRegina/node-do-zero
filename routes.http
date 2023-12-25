@@ -4,8 +4,8 @@ Content-Type: application/json
 // OBS: quando não estou mandando nada no body, não preciso desse meta dado
 
 {
-	"title": "descomplicando 01",
-	"description": "01",
+	"title": "NODE DO ZERO",
+	"description": "Aprendendo node do zero",
 	"duration": 180
 }
 
@@ -15,7 +15,7 @@ GET http://localhost:3000/videos
 
 ###
 
-PUT http://localhost:3000/videos/1
+PUT http://localhost:3000/videos/482e2777-fd9f-42f0-ab09-e543e4e397d2
 Content-Type: application/json
 
 {
@@ -26,4 +26,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/videos/
+DELETE http://localhost:3000/videos/f93ad258-9241-4b51-9e9a-7614928dcd59
