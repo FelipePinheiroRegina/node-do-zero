@@ -14,19 +14,22 @@ server.listen(3333); // Função createServer retorna uma função listen, para 
 // Mini API acima foi usando recursos node:http, porém nenhuma empresa trabalha desse jeito, ela busca frameworks completos para criação de APIs, sendo assim, utilizaremos o framework FastiFy, esse framework é bem básico, porém traz os recusros necessarios para criação de uma API, ignorando bastante coisa. Já temos frameworks completos, o mais usados hoje em dia é o Express, porém usaremos o fastify para fins de aprendizado simplificado.
 
 import  { fastify } from 'fastify';
-import { DatabaseMemory } from "./database-memory.js";
+//import { DatabaseMemory } from "./database-memory.js";
+import { DatabasePostgres } from './database-postgres.js'
+
 
 const server = fastify();
 
-const database = new DatabaseMemory();
+//const database = new DatabaseMemory();
+const database = new DatabasePostgres();
 
 // Vamos imaginar que eu quero criar uma plataforma de video, onde eu posso postar o video, pesquisar o video, atualizar o video, deletar o video. Temos rotas diferentes para cada ação. 
 
 // Método ' post ' vamos adicionar um video.
-server.post('/videos', (request, reply) => {
+server.post('/videos', async (request, reply) => {
     const { title, description, duration } = request.body;
 
-    const video = database.create({  
+    await database.create({  
         // short sintaxe, em JS quando o titulo e a variavel tem o mesmo nome da pra simplificar, para somente um parametro.
         //title: title,
         title,
@@ -41,17 +44,19 @@ server.post('/videos', (request, reply) => {
     return reply.status(201).send();
 });
 
-server.get('/videos', () => {
-    const videos = database.list();
+server.get('/videos', async (request) => {
+    const search = request.query.search
+
+    const videos = await database.list(search)
     
-    return videos;
+    return videos
 });
 
-server.put('/videos/:id', (request, reply) => {  // o :id, serve para identificar o video a ser atualizado.
+server.put('/videos/:id', async (request, reply) => {  // o :id, serve para identificar o video a ser atualizado.
     const videoId = request.params.id;
     const {title, description, duration} = request.body;
 
-    database.update(videoId, {
+    await database.update(videoId, {
         title,
         description,
         duration,
@@ -60,14 +65,18 @@ server.put('/videos/:id', (request, reply) => {  // o :id, serve para identifica
     return reply.status(204).send();
 });
 
-server.delete('/videos/:id', () => {  // o :id, serve para identificar o video a ser deletado.
-    return 'Essa é minha rota Pinheiro';
-});
+server.delete('/videos/:id', async (request, reply) => {
+    const videoId = request.params.id
+
+    await database.delete(videoId)
+
+    return reply.status(204).send()
+})
 
 
 
 
 // server.listen(3333) // Em vez de passar a porta direto, o fastify pede para passarmos um objeto json com a porta
 server.listen({
-    port: 3000,
+    port: process.env.PORT ?? 3000,
 });

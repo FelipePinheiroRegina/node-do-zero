@@ -1,5 +1,6 @@
 // Database em memoria criado afins de aprendizado simplificado 
 import { randomUUID } from 'node:crypto';  // para criar IDs
+import { title } from 'node:process';
 
 export class DatabaseMemory {
     // #videos = []; // um array protegido para armazenar meus videos.
@@ -8,9 +9,27 @@ export class DatabaseMemory {
 
     
     // MÉTODOS DE MANIPULAÇÃO DE VIDEOS
-    list() {
-        return Array.from(this.#videos.entries())  // array.from converte uma estrutura de dados que não é um array, para um array 
-    }
+    list(search) {
+        // return Array.from(this.#videos.values())  // array.from converte uma estrutura de dados que não é um array, para um array 
+        
+        return Array.from(this.#videos.entries())
+            .map((videoArray) => {  // Usarei o entries() no lugar do values(), pois o entries puxa o id, porém ele armazena em um array diferente dos dados, então entra a função map, para retornar um objeto com todos os dados juntos.
+                const id = videoArray[0];
+                const data = videoArray[1];
+
+                return {
+                    id,
+                    ...data,
+                };
+            })
+            .filter(video => {
+                if (search) {
+                    return video.title.includes(search)
+                }
+
+                return true
+            })
+    };
 
     create(video) {
         const videoId = randomUUID() // Universar Unique ID
@@ -24,7 +43,7 @@ export class DatabaseMemory {
     }
 
     delete(id) {
-        this.#videos.set(id);
+        this.#videos.delete(id)
     }
 
 }

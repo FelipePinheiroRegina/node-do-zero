@@ -3,10 +3,9 @@ POST http://localhost:3000/videos
 Content-Type: application/json 
 // OBS: quando não estou mandando nada no body, não preciso desse meta dado
 
-
- {
-	"title": "descomplicando NodeJS",
-	"description": "NodeJS do zero a api, em apenas um video!",
+{
+	"title": "descomplicando 01",
+	"description": "01",
 	"duration": 180
 }
 
@@ -16,13 +15,15 @@ GET http://localhost:3000/videos
 
 ###
 
-PUT http://localhost:3000/videos/
-Content-Type: application/json;
+PUT http://localhost:3000/videos/1
+Content-Type: application/json
 
 {
-	"title": "Modificado",
-	"description": "modifiquei",
-	"duration": 360,
-
+	"title": "Linux",
+	"description": "Aprendendo linux com CursoemVideo",
+	"duration": 40
 }
 
+###
+
+DELETE http://localhost:3000/videos/
